@@ -5,8 +5,9 @@ using UnityEngine;
 
 public static class DigitConverter
 {
-    public static TextMeshProUGUI ConvertToText(BigInteger number)
+    public static (string text, Color color) ConvertToText(BigInteger number)
     {
+        return (number.ToString(), new Color(1, 1, 1));
         var str = number.ToString();
         int digits = str.Length;
 
@@ -18,12 +19,11 @@ public static class DigitConverter
 
         Color color = new Color(1,1,1);
 
-        var textUI = new TextMeshProUGUI();
         switch (digits)
         {
             case 4: 
                 text += " K";
-                color = new Color(0.2f, 0.2f, 0.9f);
+                color = new Color(0.9f, 0.2f, 0.2f);
                 break;
             case 7:
                 text += " M";
@@ -31,11 +31,11 @@ public static class DigitConverter
                 break;
             case 10:
                 text += " B";
-                color = new Color(0.2f, 0.2f, 0.9f);
+                color = new Color(0.9f, 0.2f, 0.2f);
                 break;
             case 13:
                 text += " T";
-                color = new Color(0.2f, 0.9f, 0.2f);
+                color = new Color(0.9f, 0.2f, 0.2f);
                 break;
             case 16:
                 text += " Qd";
@@ -67,8 +67,6 @@ public static class DigitConverter
                 break;
         }
 
-        textUI.text = text;
-        textUI.color = color;
-        return textUI;
+        return (text, color);
     }
 }

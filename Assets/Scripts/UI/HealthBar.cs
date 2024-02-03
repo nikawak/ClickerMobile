@@ -17,7 +17,6 @@ public class HealthBar : MonoBehaviour
     {
         _slider.maxValue = 1f;
         _maxHealth = value;
-        SetHPTextUI(value);
     }
     public void SetHealth(BigInteger health)
     {
@@ -46,7 +45,7 @@ public class HealthBar : MonoBehaviour
     public void SetHPTextUI(BigInteger health)
     {
         var tmpro = DigitConverter.ConvertToText(health);
-        _healthUI.text = tmpro.text;
+        _healthUI.text = tmpro.text + " / " + _maxHealth;
         _healthUI.color = tmpro.color;
     }
 }

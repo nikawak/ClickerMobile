@@ -11,11 +11,14 @@ public class Character : MonoBehaviour
     [SerializeField] private int _manaCapacity;
     [SerializeField] private BigInteger _damage;
 
+    private Calculator _calculator;
+
     public int CurrentMana => _currentMana;
     private int ManaCapacity => _manaCapacity;
     private void Start()
     {
-        UserData.LevelCharacter = 1;
+        UserData.LevelCharacter = 0;
+        _calculator = new Calculator();
     }
     public void LooseMana(int amount)
     {
@@ -29,19 +32,20 @@ public class Character : MonoBehaviour
     public BigInteger CalculateDamage()
     {
         var level = UserData.LevelCharacter;
-        var additionMultiplier = level / 5;
-        additionMultiplier = additionMultiplier == 0 ? 2 : additionMultiplier + 1;
+        var stage = UserData.StageCharacter;
 
-        var damage = BigInteger.Pow(level, additionMultiplier) * additionMultiplier * ((int)_weapon.DamageMultiplier * 100)/100;
-        
+        var value = _calculator.CalculateDamage(level, stage);
         var rand = new System.Random();
-        damage = rand.NextDouble() > (double)_weapon.CritChance ? damage * 2 : damage;
-        return damage;
+        value = rand.NextDouble() > (double)_weapon.CritChance ? value * 2 : value;
+        return value;
     }
     public void SetWeapon(Weapon weapon)
     {
         _weapon = weapon;
     }
-    public void GainLevel() => UserData.LevelCharacter += 1; 
+    public void GainLevel()
+    {
+        UserData.LevelCharacter++;
+    }
     
 }

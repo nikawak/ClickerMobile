@@ -1,39 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyController : MonoBehaviour
 {
     private Enemy _currentEnemy;
-    public Enemy CurrentEnemy => _currentEnemy;
-    public GameObject[] StageEnemies;
-    public GameObject Boss;
+    public Enemy CurrentEnemy => _currentEnemy ?? StageEnemies[UserData.Level].GetComponent<Enemy>();
+    public Enemy[] StageEnemies;
+    public Enemy Boss;
     public Vector3 SpawnPoint;
-    public int EnemiesToBoss;
+    public int EnemiesToBoss = 10;
+    public UnityEvent OnEnemyDeath;
+    public float TimeToDie = 1f;
+    private RandomCreatedObjectPool<Enemy> _pool; 
 
     private void Start()
     {
+        _pool = new RandomCreatedObjectPool<Enemy>(StageEnemies.ToList(), transform, StageEnemies.Count(), false);
         UserData.Level = 0;
-        _currentEnemy = StageEnemies[UserData.Level].GetComponent<Enemy>();
+        _currentEnemy = StageEnemies[UserData.Level];
         SpawnEnemy();
     }
     public void SpawnIteration()
     {
+        StartCoroutine(SpawnIterationAsync());
+    }
+    private IEnumerator SpawnIterationAsync()
+    {
+        yield return new WaitForSeconds(TimeToDie);
         RemoveEnemy();
         SpawnEnemy();
         UserData.Level++;
-        UserData.Level = UserData.Level >= StageEnemies.Length ? 0 : UserData.Level;
+        yield return null;
     }
     public Enemy SpawnEnemy()
     {
         var level = UserData.Level;
-        GameObject nextEnemy;
 
-        if (level % EnemiesToBoss == 0)
-            nextEnemy = Instantiate(Boss, SpawnPoint, Quaternion.AngleAxis(180,Vector3.up));
-        else
-            nextEnemy = Instantiate(StageEnemies[level], SpawnPoint, Quaternion.AngleAxis(180, Vector3.up));
-        _currentEnemy = nextEnemy.GetComponent<Enemy>();
+        _currentEnemy = _pool.GetFreeItem();
+        if (level % EnemiesToBoss == 0 && level != 0)
+        {
+            _currentEnemy.MakeBoss(); // 10x hp for boss
+        }
+      
         _currentEnemy.OnDeath.AddListener(SpawnIteration);
 
         return _currentEnemy;
@@ -41,6 +52,8 @@ public class EnemyController : MonoBehaviour
     public void RemoveEnemy()
     {
         _currentEnemy.OnDeath.RemoveAllListeners();
-        Destroy(_currentEnemy.gameObject);
+
+        OnEnemyDeath.Invoke();
+
     }
 }

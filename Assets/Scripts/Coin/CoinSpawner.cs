@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
@@ -12,32 +13,39 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private EnemyController _enemyController;
     [SerializeField] private Coin _coinPrefab;
     [SerializeField] private ObjectPool<Coin> _pool;
-    private void Awake()
+
+    [SerializeField] private List<Transform> _points;
+
+    private Calculator _calculator;
+    private void Start()
     {
-        _enemyController.CurrentEnemy.OnDeath.AddListener(SpawnCoins);
-        _pool = new ObjectPool<Coin>(_coinPrefab, transform, 30);
+        UserData.Coins = 0;
+        _pool = new ObjectPool<Coin>(_coinPrefab, transform, _coinsCountAfterDeath, true);
+        _enemyController.OnEnemyDeath.AddListener(SpawnCoins);
+        _calculator = new Calculator();
     }
 
     private void SpawnCoins()
     {
-        _enemyController.CurrentEnemy.OnDeath.RemoveAllListeners();
         var reward = CalculateReward();
-        
         for(int i = 0; i < _coinsCountAfterDeath; i++)
         {
             var coin = _pool.GetFreeItem();
             coin.SetValue(reward/_coinsCountAfterDeath);
+            coin.DisableCoin(1.5f);
+            //coin.Shoot();
+            var index = new System.Random().Next(_points.Count-1);
+            coin.transform.position = _points[index].position;
         }
     }
     public BigInteger CalculateReward()
     {
         var level = UserData.Level;
-        var additionMultiplier = level / 3;
-        additionMultiplier = additionMultiplier == 0 ? 2 : additionMultiplier + 1;
+        var stage = UserData.Stage;
 
-        var reward = BigInteger.Pow(level, additionMultiplier) + 8;
+        var value = _calculator.CalculateReward(level, stage);
 
-        return reward;
+        return value;
     }
     
 }

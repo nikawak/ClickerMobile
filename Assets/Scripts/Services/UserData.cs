@@ -24,13 +24,13 @@ public static class UserData
         get => PlayerPrefs.GetInt("LevelCharacter");
         set => PlayerPrefs.SetInt("LevelCharacter", value);
     }
-    public static int GetAbilityLevel(string codeName)
+    public static int StageCharacter
     {
-        var name = "LevelAbility" + codeName;
-        if (!PlayerPrefs.HasKey(name)) return 0;
-
-        return PlayerPrefs.GetInt(name);
+        get => PlayerPrefs.GetInt("StageCharacter");
+        set => PlayerPrefs.SetInt("StageCharacter", value);
     }
+    public static int GetAbilityLevel(string codeName) => PlayerPrefs.GetInt("LevelAbility" + codeName);
+    
     public static void IncrementAbilityLevel(string codeName)
     {
         var current = GetAbilityLevel(codeName);
