@@ -18,9 +18,9 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        //UserData.ResetAll();
         _pool = new RandomCreatedObjectPool<Enemy>(StageEnemies.ToList(), transform, StageEnemies.Count(), false);
-        UserData.Level = 0;
-        _currentEnemy = StageEnemies[UserData.Level];
+        //_currentEnemy = _pool.GetFreeItem();
         SpawnEnemy();
     }
     public void SpawnIteration()

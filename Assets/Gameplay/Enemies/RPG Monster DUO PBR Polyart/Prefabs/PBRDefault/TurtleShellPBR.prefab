@@ -576,6 +576,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _healthBar: {fileID: 0}
+  _timeToDie: 1
 --- !u!1 &1532652994627396
 GameObject:
   m_ObjectHideFlags: 0

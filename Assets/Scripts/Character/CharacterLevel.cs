@@ -11,16 +11,18 @@ public class CharacterLevel : MonoBehaviour
 {
     [SerializeField] private Button _btn;
     [SerializeField] private TextMeshProUGUI _price;
+    [SerializeField] private TextMeshProUGUI _level;
     private Calculator _calculator;
     
     private void Start()
     {
+        _level.text = UserData.LevelCharacter.ToString();
         _calculator = new Calculator();
     }
     private void Update()
     {
         _btn.interactable = CanGainLevel(out var price);
-        _price.text = price.ToString();
+        _price.text = DigitConverter.ConvertToText(price).text;
     }
 
     public BigInteger CalculatePrice()
@@ -50,6 +52,8 @@ public class CharacterLevel : MonoBehaviour
     {
         UserData.Coins -= price;
         UserData.LevelCharacter++;
+        UserData.StageCharacter = UserData.LevelCharacter / 10;
+        _level.text = UserData.LevelCharacter.ToString();
     }
 
 }

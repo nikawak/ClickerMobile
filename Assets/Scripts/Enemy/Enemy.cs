@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 {
     private BigInteger _health;
     private Animator _animator;
-    private Calculator _calculator;
+    private Calculator _calculator = new Calculator();
 
     public UnityEvent OnDeath;
     public HealthBar _healthBar;
@@ -83,9 +83,16 @@ public class Enemy : MonoBehaviour
     {
         var bossMultiplier = 8;
         _health = CalculateHealth() * bossMultiplier;
-        transform.localScale *= 1.2f;
+        transform.localScale *= 1.4f;
 
         _healthBar.SetMaxHealth(_health);
         _healthBar.SetHealth(_health);
+        OnDeath.AddListener(OnBossDead);
+    }
+
+    private void OnBossDead()
+    {
+        UserData.Stage++;
+        transform.localScale /= 1.4f;
     }
 }

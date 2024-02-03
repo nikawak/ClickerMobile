@@ -4,6 +4,14 @@ using UnityEngine;
 
 public static class UserData
 {
+    public static void ResetAll()
+    {
+        Coins = 0;
+        Stage = 0;
+        Level = 0;
+        LevelCharacter = 0;
+        StageCharacter = 0;
+    }
     public static BigInteger Coins
     {
         get => BigInteger.Parse(PlayerPrefs.GetString("Coins"));

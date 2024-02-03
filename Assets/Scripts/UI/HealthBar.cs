@@ -19,7 +19,7 @@ public class HealthBar : MonoBehaviour
         _maxHealth = value;
     }
     public void SetHealth(BigInteger health)
-    {
+     {
         SetHPTextUI(health);
 
         var len1 = health.ToString().Length;
@@ -45,7 +45,7 @@ public class HealthBar : MonoBehaviour
     public void SetHPTextUI(BigInteger health)
     {
         var tmpro = DigitConverter.ConvertToText(health);
-        _healthUI.text = tmpro.text + " / " + _maxHealth;
-        _healthUI.color = tmpro.color;
+        var tmproMax = DigitConverter.ConvertToText(_maxHealth);
+        _healthUI.text = tmpro.text + " / " + tmproMax.text;
     }
 }

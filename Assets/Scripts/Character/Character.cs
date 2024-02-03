@@ -17,7 +17,6 @@ public class Character : MonoBehaviour
     private int ManaCapacity => _manaCapacity;
     private void Start()
     {
-        UserData.LevelCharacter = 0;
         _calculator = new Calculator();
     }
     public void LooseMana(int amount)

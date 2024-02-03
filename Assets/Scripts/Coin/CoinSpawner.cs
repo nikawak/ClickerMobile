@@ -19,7 +19,6 @@ public class CoinSpawner : MonoBehaviour
     private Calculator _calculator;
     private void Start()
     {
-        UserData.Coins = 0;
         _pool = new ObjectPool<Coin>(_coinPrefab, transform, _coinsCountAfterDeath, true);
         _enemyController.OnEnemyDeath.AddListener(SpawnCoins);
         _calculator = new Calculator();

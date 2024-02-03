@@ -20,7 +20,7 @@ public class Calculator
     }
     public BigInteger CalculateReward(int level, int stage)
     {
-        var value = Calculate(level, stage) / 2 + 15;
+        var value = Calculate(level, stage) / 3 + 15;
         return value;
     }
     public BigInteger CalculateLevelPrice(int level, int stage)
