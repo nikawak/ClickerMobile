@@ -16,7 +16,6 @@ public class CharacterLevel : MonoBehaviour
     
     private void Start()
     {
-        UserData.LevelCharacter = 100;
         _level.text = UserData.LevelCharacter.ToString();
         _calculator = new Calculator();
     }

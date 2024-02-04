@@ -1536,7 +1536,7 @@ GameObject:
   - component: {fileID: 753109843}
   m_Layer: 0
   m_Name: BeholderPBRDefault
-  m_TagString: Untagged
+  m_TagString: beholder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

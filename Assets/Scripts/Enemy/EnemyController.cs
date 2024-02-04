@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class EnemyController : MonoBehaviour
 {
     private Enemy _currentEnemy;
-    public Enemy CurrentEnemy => _currentEnemy ?? StageEnemies[UserData.Level].GetComponent<Enemy>();
+    public Enemy CurrentEnemy => _currentEnemy ?? StageEnemies[UserData.Level];
     public Enemy[] StageEnemies;
     public Enemy Boss;
     public Vector3 SpawnPoint;
@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        UserData.ResetAll();
+        //UserData.ResetAll();
         _pool = new RandomCreatedObjectPool<Enemy>(StageEnemies.ToList(), transform, StageEnemies.Count(), false);
         //_currentEnemy = _pool.GetFreeItem();
         SpawnEnemy();
