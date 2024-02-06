@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(EnemyVFX))]
 public class Enemy : MonoBehaviour
 {
     private BigInteger _health;
@@ -19,7 +20,6 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _calculator = new Calculator();
-        _healthBar = FindObjectOfType<HealthBar>();
         _animator = GetComponent<Animator>();
 
         SetStartHealth();

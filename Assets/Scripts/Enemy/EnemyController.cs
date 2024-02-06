@@ -16,12 +16,14 @@ public class EnemyController : MonoBehaviour
     public float TimeToDie = 1f;
     private RandomCreatedObjectPool<Enemy> _pool;
     public SceneManager _cutscene;
+    public UnityEvent BossFightStarts;
+    public UnityEvent BossFightEnds;
 
     private void Start()
     {
-        //UserData.ResetAll();
+        UserData.ResetAll();
+        UserData.Coins = 50000000000;
         _pool = new RandomCreatedObjectPool<Enemy>(StageEnemies.ToList(), transform, StageEnemies.Count(), false);
-        //_currentEnemy = _pool.GetFreeItem();
         SpawnEnemy();
     }
     public void SpawnIteration()
@@ -43,8 +45,9 @@ public class EnemyController : MonoBehaviour
         _currentEnemy = _pool.GetFreeItem();
         if (level % EnemiesToBoss == 0 && level != 0)
         {
+            BossFightStarts.Invoke();
+            _currentEnemy.OnDeath.AddListener(() => BossFightEnds.Invoke());
             StartCoroutine(_cutscene.LoadBoss(_currentEnemy, () => _currentEnemy.MakeBoss()));
-            // 10x hp for boss
         }
       
         _currentEnemy.OnDeath.AddListener(SpawnIteration);

@@ -11,6 +11,7 @@ public class Calculator
     public BigInteger CalculateHP(int level, int stage)
     {
         var value = Calculate(level, stage) * 2 + 15;
+        if (stage != 0) value *= stage/2;
         return value;
     }
     public BigInteger CalculateDamage(int level, int stage)
@@ -45,7 +46,7 @@ public class Calculator
 
         return value;
     }
-    private BigInteger Calculate(int level, BigInteger startValue)
+    public BigInteger CalculateLevelAbilityPrice(int level, BigInteger startValue)
     {
         if (!NeedCalculate(level, 0)) return CurrentValue;
         var value = BigInteger.Pow(startValue, level + 1);

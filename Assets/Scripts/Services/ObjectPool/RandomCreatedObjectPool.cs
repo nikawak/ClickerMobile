@@ -15,15 +15,6 @@ public class RandomCreatedObjectPool<T> : ObjectPool<T> where T : MonoBehaviour
         //CreatePool(count);
     }
 
-    protected override void CreatePool(int count = 5)
-    {
-        throw new NotImplementedException();
-    }
-    protected override T CreateItem(bool isActiveByDefault = false)
-    {
-        throw new NotImplementedException("This method dont allowed");
-    }
-    
     public override bool HasFreeItem(out T item)
     {
         var random = new System.Random().Next(_pool.Count);

@@ -25,10 +25,12 @@ public class Coin : MonoBehaviour
     public void DisableCoin(float time)
     {
         if (!gameObject.activeInHierarchy) return;
+
         StartCoroutine(DisableCoinAsync(time));
     }
     private void OnDisable()
     {
+
         UserData.Coins += _value;
     }
     public void SetValue(BigInteger value)

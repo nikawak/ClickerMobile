@@ -42,6 +42,6 @@ public static class UserData
     public static void IncrementAbilityLevel(string codeName)
     {
         var current = GetAbilityLevel(codeName);
-        PlayerPrefs.SetInt("LevelAbility", current + 1);
+        PlayerPrefs.SetInt("LevelAbility" + codeName, current + 1);
     }
 }

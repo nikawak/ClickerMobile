@@ -31,7 +31,7 @@ public class CoinSpawner : MonoBehaviour
         {
             var coin = _pool.GetFreeItem();
             coin.SetValue(reward/_coinsCountAfterDeath);
-            coin.DisableCoin(1.5f);
+            coin.DisableCoin(2f);
             //coin.Shoot();
             var index = new System.Random().Next(_points.Count-1);
             coin.transform.position = _points[index].position;

@@ -4,8 +4,7 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] private float _damageMultiplier;
     [SerializeField] private float _critChance;
-    [SerializeField] private Vector3 _weaponToUserPoint;
-    [SerializeField] private Quaternion _weaponToUserAngle;
+    [SerializeField] private Transform _parent;
     [SerializeField] private Character _character;
 
     public float DamageMultiplier => _damageMultiplier;
@@ -13,7 +12,7 @@ public class Weapon : MonoBehaviour
 
     public void Use()
     {
-        var weapon = Instantiate(this, _weaponToUserPoint, _weaponToUserAngle);
+        var weapon = Instantiate(this, _parent);
         _character.SetWeapon(weapon);
     }
 }

@@ -2,26 +2,35 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class GreatSlashAbility : CharacterAbility
 {
     public BigInteger Damage => CalculateDamage();
-    private void Start()
-    {
-    }
+
     public override void Use()
     {
+        if (!CanUse()) return;
         base.Use();
-
         
+        StartCoroutine(UseAsync());
+    }
+    private IEnumerator UseAsync()
+    {
+        _animator.SetTrigger(AbilityInfo.CodeName);
+        _animator.applyRootMotion = true;
+        yield return new WaitForSeconds(_animator.GetCurrentAnimatorClipInfo(0).Length * 1.8f);
+
+        _animator.applyRootMotion = false;
+        _enemyController.CurrentEnemy.GetDamage(CalculateDamage());
     }
     public BigInteger CalculateDamage()
     {
-        var abilityLevel = UserData.GetAbilityLevel(_abilityInfo.CodeName);
+        var abilityLevel = UserData.GetAbilityLevel(AbilityInfo.CodeName);
         var characterDamage = _character.CalculateDamage();
-        var multiplier = 5;
+        var multiplier = 30;
 
         var damage = characterDamage * abilityLevel * multiplier;
 

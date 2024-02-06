@@ -11,6 +11,7 @@ public class UISwitcher : MonoBehaviour
     [SerializeField] GameObject _menu;
     [SerializeField] float _menuClosedPosition;
     [SerializeField] float _menuOpenedPosition;
+    [SerializeField] List<GameObject> _objectsToHide;
 
     public void CloseMenu()
     {
@@ -66,11 +67,14 @@ public class UISwitcher : MonoBehaviour
     private void Open(GameObject obj)
     {
         obj.SetActive(true);
+        _objectsToHide.ForEach(x => x.SetActive(false));
     }
     private void CloseAll()
     {
         _settings.SetActive(false);
         _backpack.SetActive(false);
         _shop.SetActive(false);
+
+        _objectsToHide.ForEach(x => x.SetActive(true));
     }
 }
