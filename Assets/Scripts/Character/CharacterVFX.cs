@@ -41,7 +41,8 @@ public class CharacterVFX : MonoBehaviour
 
         var tmpro = _textDamagePool.GetFreeItem();
         tmpro.text = DigitConverter.ConvertToText(num).text;
-        tmpro.transform.position += new UnityEngine.Vector3(Convert.ToSingle(rand.NextDouble() * 500) - 250f, Convert.ToSingle(rand.NextDouble() * 500) - 250f, 0);
+        var mid = new UnityEngine.Vector3(1080/2,1920/2,0);
+        tmpro.transform.position = new UnityEngine.Vector3(mid.x + new System.Random().Next(-400,400), mid.y + new System.Random().Next(-700,700), 0);
 
         StartCoroutine(DisableText(tmpro, 0.3f));
     }

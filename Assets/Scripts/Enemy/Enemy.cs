@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,9 +15,12 @@ public class Enemy : MonoBehaviour
     private Calculator _calculator = new Calculator();
 
     public UnityEvent OnDeath;
+    public UnityEvent<BigInteger> OnGetDamage;
+    public UnityEvent OnDeepWounds;
     public HealthBar _healthBar;
     public float _timeToDie = 1f;
     private bool isDead;
+    public BigInteger Health => _health;
     private void Start()
     {
         _calculator = new Calculator();
@@ -28,6 +32,10 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         SetStartHealth();
+    }
+    private void OnDisable()
+    {
+        OnGetDamage.RemoveAllListeners();
     }
     public void SetStartHealth()
     {
@@ -58,9 +66,32 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            OnGetDamage.Invoke(damage);
             _animator.SetTrigger("Hit");
         }
 
+    }
+    public void DeepWoundsApply(BigInteger damage, int applyTimes)
+    {
+        StartCoroutine(DeepWoundsApplyAsync(damage, applyTimes));
+    }
+    private IEnumerator DeepWoundsApplyAsync(BigInteger damage, int applyTimes)
+    {
+        OnDeepWounds.Invoke();
+        for (int i = 0; i < applyTimes; i++) 
+        {
+            yield return new WaitForSeconds(0.3f);
+
+            _health -= damage;
+            _health = _health > 0 ? _health : 0;
+            _healthBar.SetHealth(_health);
+
+            if (_health == 0)
+            {
+                Die(_timeToDie);
+            }
+            
+        }
     }
     public void Die(float time)
     {
@@ -70,14 +101,13 @@ public class Enemy : MonoBehaviour
     {
         isDead = true;
         _animator.SetTrigger("Die");
-        OnDeath?.Invoke();
+        
         yield return new WaitForSeconds(time);
 
-
+        
         gameObject.SetActive(false);
         isDead = false;
-        //SetStartHealth();
-        yield return null;
+        OnDeath?.Invoke();
     }
     public void MakeBoss()
     {
@@ -92,6 +122,7 @@ public class Enemy : MonoBehaviour
 
     private void OnBossDead()
     {
+        OnDeath.RemoveListener(OnBossDead);
         UserData.Stage++;
         transform.localScale /= 1.4f;
     }

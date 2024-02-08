@@ -7,16 +7,17 @@ public class Calculator
     public BigInteger CurrentValue = 17;
     private int _currentStage = 100000;
     private int _currentLevel = 100000;
+    private string _currentCodeName;
 
     public BigInteger CalculateHP(int level, int stage)
     {
         var value = Calculate(level, stage) * 2 + 15;
-        if (stage != 0) value *= stage/2;
+        if (stage > 1) value *= (stage/2); //усложнение для того чтобы престиж был не бесполезен
         return value;
     }
-    public BigInteger CalculateDamage(int level, int stage)
+    public BigInteger CalculateDamage(int level, int stage, Weapon weapon)
     {
-        var value = Calculate(level, stage);
+        var value = Calculate(level, stage).Muliply(weapon.CalculateCrit()).Muliply(weapon.DamageMultiplier);
         return value;
     }
     public BigInteger CalculateReward(int level, int stage)
@@ -46,17 +47,22 @@ public class Calculator
 
         return value;
     }
-    public BigInteger CalculateLevelAbilityPrice(int level, BigInteger startValue)
+    public BigInteger CalculateLevelAbilityPrice(int level, string codeName, BigInteger startValue)
     {
-        if (!NeedCalculate(level, 0)) return CurrentValue;
+        if (!NeedCalculate(level, codeName)) return CurrentValue;
         var value = BigInteger.Pow(startValue, level + 1);
 
         _currentLevel = level;
         CurrentValue = value;
+        _currentCodeName = codeName;
         return value;
     }
     public bool NeedCalculate(int level, int stage = 0)
     {
         return !(_currentLevel == level && stage == _currentStage);
+    }
+    public bool NeedCalculate(int level, string codeName)
+    {
+        return !(_currentLevel == level && codeName == _currentCodeName);
     }
 }

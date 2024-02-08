@@ -55,7 +55,7 @@ public abstract class CharacterAbility : MonoBehaviour
     public virtual BigInteger CalculateLevelPrice()
     {
         var level = UserData.GetAbilityLevel(AbilityInfo.CodeName);
-        var price = _calculator.CalculateLevelAbilityPrice(level, AbilityInfo.StartPrice);
+        var price = _calculator.CalculateLevelAbilityPrice(level, AbilityInfo.CodeName, AbilityInfo.StartPrice);
         return price;
     }
 }

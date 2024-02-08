@@ -20,9 +20,11 @@ public class Character : MonoBehaviour
     public UnityEvent DealingDamage;
     public UnityEvent ManaChaged;
     public bool CanDealDamage;
+    //public float AdditionalDamageMultiplier = 1f;
     private void Start()
     {
         _calculator = new Calculator();
+        //Screen.SetResolution(500, 900, false);
     }
     public void LooseMana(float amount)
     {
@@ -56,14 +58,15 @@ public class Character : MonoBehaviour
         var level = UserData.LevelCharacter;
         var stage = UserData.StageCharacter;
 
-        var value = _calculator.CalculateDamage(level, stage);
-        var rand = new System.Random();
-        value = rand.NextDouble() > (double)_weapon.CritChance ? value * 2 : value;
+        var value = _calculator.CalculateDamage(level, stage, _weapon);
         return value;
     }
     public void SetWeapon(Weapon weapon)
     {
+        if(_weapon == weapon) return;
+        _weapon.gameObject.SetActive(false);
         _weapon = weapon;
+        _weapon.gameObject.SetActive(true);
     }
     public void GainLevel()
     {

@@ -37,6 +37,24 @@ public static class UserData
         get => PlayerPrefs.GetInt("StageCharacter");
         set => PlayerPrefs.SetInt("StageCharacter", value);
     }
+    public static float SoundValue
+    {
+        get => PlayerPrefs.GetInt("SoundValue");
+        set => PlayerPrefs.SetFloat("SoundValue", value);
+    }
+    public static float MusicValue
+    {
+        get => PlayerPrefs.GetInt("MusicValue");
+        set => PlayerPrefs.SetFloat("MusicValue", value);
+    }
+    public static bool IsWeaponUnclocked(string name)
+    {
+        return PlayerPrefs.HasKey("Weapon" + name);
+    }
+    public static void UnclockWeapon(string name)
+    {
+        PlayerPrefs.SetInt("Weapon" + name, 1);
+    }
     public static int GetAbilityLevel(string codeName) => PlayerPrefs.GetInt("LevelAbility" + codeName);
     
     public static void IncrementAbilityLevel(string codeName)
