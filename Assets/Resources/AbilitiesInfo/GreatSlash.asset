@@ -16,4 +16,4 @@ MonoBehaviour:
   _codeName: GS
   _maxLevel: 5
   _manaCost: 15
-  _cooldown: 5
+  _cooldown: 20

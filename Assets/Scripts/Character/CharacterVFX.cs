@@ -44,8 +44,9 @@ public class CharacterVFX : MonoBehaviour
         var mid = new UnityEngine.Vector3(1080/2,1920/2,0);
         tmpro.transform.position = new UnityEngine.Vector3(mid.x + new System.Random().Next(-400,400), mid.y + new System.Random().Next(-700,700), 0);
 
-        StartCoroutine(DisableText(tmpro, 0.3f));
+        StartCoroutine(DisableText(tmpro, 0.3f));//canvas remove => tmpro remove
     }
+    
     private IEnumerator DisableText(TextMeshProUGUI text, float time)
     {
         yield return new WaitForSeconds(time);

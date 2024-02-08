@@ -39,6 +39,10 @@ public class Character : MonoBehaviour
         _currentMana = _currentMana > _maxMana? _maxMana: _currentMana;
         ManaChaged.Invoke();
     }
+    public void SetWeaponCrit(float crit, float time)
+    {
+        StartCoroutine(_weapon.SetCrit(crit, time));
+    }
     public void IncreaceManaLevel(float newMaxMana)
     {
         _maxMana = newMaxMana;
@@ -64,9 +68,14 @@ public class Character : MonoBehaviour
     public void SetWeapon(Weapon weapon)
     {
         if(_weapon == weapon) return;
-        _weapon.gameObject.SetActive(false);
+        RemoveWeapon(_weapon);
         _weapon = weapon;
         _weapon.gameObject.SetActive(true);
+    }
+    public void RemoveWeapon(Weapon weapon)
+    {
+        weapon.gameObject.SetActive(false);
+        weapon.Unequipe();
     }
     public void GainLevel()
     {

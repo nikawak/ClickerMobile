@@ -38,7 +38,7 @@ public class WeaponView : MonoBehaviour
     }
     public void Use()
     {
-        _weapon.Use();
+        _weapon.Equipe();
         _btnUse.interactable = false;
     }
     [ContextMenu(nameof(SetDescription))]

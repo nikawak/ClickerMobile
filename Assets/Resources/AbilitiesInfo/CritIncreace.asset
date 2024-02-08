@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d44834797652c8843984497b8519f1c1, type: 3}
-  m_Name: DeepWounds
+  m_Name: CritIncreace
   m_EditorClassIdentifier: 
-  _startPrice: 17500000
-  _codeName: DW
+  _startPrice: 8300000000
+  _codeName: CI
   _maxLevel: 5
-  _manaCost: 20
-  _cooldown: 30
+  _manaCost: 40
+  _cooldown: 50

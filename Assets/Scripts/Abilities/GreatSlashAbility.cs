@@ -21,9 +21,11 @@ public class GreatSlashAbility : CharacterAbility
     {
         _animator.SetTrigger(AbilityInfo.CodeName);
         _animator.applyRootMotion = true;
+        _character.CanDealDamage = false;
         yield return new WaitForSeconds(_animator.GetCurrentAnimatorClipInfo(0).Length * 1.8f);
 
         _animator.applyRootMotion = false;
+        _character.CanDealDamage = true;
         _enemyController.CurrentEnemy.GetDamage(CalculateDamage());
     }
     public BigInteger CalculateDamage()
