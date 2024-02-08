@@ -8,6 +8,7 @@ public class WeaponView : MonoBehaviour
 {
     [SerializeField] private Weapon _weapon;
     [SerializeField] private TextMeshProUGUI _description;
+    [SerializeField] private TextMeshProUGUI _condition;
 
     [SerializeField] private Image _icon;
     [SerializeField] private Image _panel;
@@ -23,6 +24,7 @@ public class WeaponView : MonoBehaviour
     private void Update()
     {
         SetLock(); //оптимизировать на события
+        
         _btnUse.interactable = !_weapon.IsEquiped;
     }
     public void SetLock()
@@ -57,6 +59,7 @@ public class WeaponView : MonoBehaviour
         _icon.color = _unlockedIcon;
         _panel.color = Color.white;
         _btnUse.gameObject.SetActive(true);
+        _condition.gameObject.SetActive(false);
     }
     [ContextMenu(nameof(Lock))]
     public void Lock()
@@ -64,5 +67,6 @@ public class WeaponView : MonoBehaviour
         _icon.color = _locked;
         _panel.color = _locked;
         _btnUse.gameObject.SetActive(false);
+        _condition.gameObject.SetActive(true);
     }
 }

@@ -6,18 +6,13 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _valueText;
+
     private BigInteger _value;
 
-    private Rigidbody _rb;
-    [SerializeField] private TextMeshProUGUI _valueText;
-    private void Start()
+    private void Update()
     {
-        _rb = GetComponent<Rigidbody>();
-    }
-    private void OnEnable()
-    {
-        _rb = _rb?? GetComponent<Rigidbody>();
-        _rb.velocity = UnityEngine.Vector3.zero;
+        transform.Translate(UnityEngine.Vector3.down);
     }
     private IEnumerator DisableCoinAsync(float time)
     {

@@ -16,14 +16,13 @@ public class SceneManager : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetAllScenes().Length == 1) return;
         ObjectsToHide.ForEach(x => x.SetActive(true));
         var notBosses = ObjectsToHide.Where(x => !x.CompareTag(EnemyTag)).ToList();
-        Canvas.gameObject.GetComponentsInChildren(typeof(TextMeshProUGUI)).ToList().ForEach(x=>x.gameObject.SetActive(false));
         notBosses.ForEach(x => x.SetActive(false));
     }
     public IEnumerator LoadBoss(Enemy enemy, Action callback)
     {
         EnemyTag = enemy.tag;
         ObjectsToHide.Add(enemy.gameObject);
-
+        
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("CutScene", LoadSceneMode.Additive);
 
         SetActiveMultiple(false);
@@ -33,6 +32,7 @@ public class SceneManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("CutScene");
 
         ObjectsToHide.Remove(enemy.gameObject);
+        Canvas.gameObject.GetComponentsInChildren(typeof(TextMeshProUGUI)).Where(x=>x.CompareTag("damageText")).ToList().ForEach(x => x.gameObject.SetActive(false));
 
         callback.Invoke();
     }

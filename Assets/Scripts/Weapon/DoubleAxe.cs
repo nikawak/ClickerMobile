@@ -2,6 +2,6 @@ public class DoubleAxe : Weapon
 {
     public override bool UnclockCondition()
     {
-        return UserData.Stage >= 0;
+        return UserData.Stage >= 2; //реклама
     }
 }

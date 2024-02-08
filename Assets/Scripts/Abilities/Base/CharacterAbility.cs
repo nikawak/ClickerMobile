@@ -8,10 +8,12 @@ public abstract class CharacterAbility : MonoBehaviour
     [SerializeField] protected Character _character;
     [SerializeField] protected AudioClip _audioHit;
 
-    public AbilityInfo AbilityInfo;
-
     protected float _elapsedTime;
     protected Calculator _calculator;
+
+    public AbilityInfo AbilityInfo;
+    public float Elapsed => _elapsedTime;
+
     protected virtual void Start()
     {
         _calculator = new Calculator();

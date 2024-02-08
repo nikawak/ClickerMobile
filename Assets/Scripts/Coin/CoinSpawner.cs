@@ -13,6 +13,7 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private EnemyController _enemyController;
     [SerializeField] private Coin _coinPrefab;
     [SerializeField] private ObjectPool<Coin> _pool;
+    [SerializeField] private Transform _container;
 
     [SerializeField] private List<Transform> _points;
 

@@ -74,8 +74,8 @@ public class Character : MonoBehaviour
     }
     public void RemoveWeapon(Weapon weapon)
     {
-        weapon.gameObject.SetActive(false);
         weapon.Unequipe();
+        weapon.gameObject.SetActive(false);
     }
     public void GainLevel()
     {

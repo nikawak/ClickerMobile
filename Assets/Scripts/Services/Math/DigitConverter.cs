@@ -27,7 +27,9 @@ public static class DigitConverter
             text = text.Insert(floatPart, ",");
 
         Color color = new Color(1,1,1);
-        text += NumberScale[(digits-1)/3];
+        var index = (digits - 1) / 3;
+        if (!NumberScale.ContainsKey(index)) return (text + "OMG", color);
+        text += NumberScale[(digits - 1) / 3];
 
         return (text, color);
     }
